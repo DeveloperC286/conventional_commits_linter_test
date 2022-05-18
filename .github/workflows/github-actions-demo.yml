@@ -4,10 +4,13 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "${{ github.event.pull_request.head.sha }}"
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - run: git show-ref
       - run: git log
+      - run: git log "${{ github.base_ref }}.."
       - run: cargo install conventional_commits_linter
-      - run: RUST_LOG=trace conventional_commits_linter --allow-angular-type-only --from-reference "origin/${{ github.head_ref }}"
+      - run: RUST_LOG=trace conventional_commits_linter --allow-angular-type-only --from-reference "origin/${{ github.base_ref }}"
