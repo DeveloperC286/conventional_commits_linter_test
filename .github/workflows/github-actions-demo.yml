@@ -4,10 +4,9 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🔎 The name of your target branch is ${{ github.base_ref }}."
-      - run: echo "🔎 The name of your target branch is ${{ github.head_ref }}."
-      - name: Check out code.
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - run: git show-ref
       - run: git log
       - run: cargo install conventional_commits_linter
