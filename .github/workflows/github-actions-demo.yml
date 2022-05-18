@@ -8,6 +8,7 @@ jobs:
       - run: echo "🔎 The name of your target branch is ${{ github.head_ref }}."
       - name: Check out code.
         uses: actions/checkout@v3
-      - run: git log "origin/${{ github.head_ref }}.."
+      - run: git show-ref
+      - run: git log
       - run: cargo install conventional_commits_linter
       - run: RUST_LOG=trace conventional_commits_linter --allow-angular-type-only --from-reference "origin/${{ github.head_ref }}"
